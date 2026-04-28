@@ -1,35 +1,61 @@
 # fix this code 
-
-
 import time
 import board
 import pwmio
-import analogio 
+import analogio
+import neopixel
 
-# Motor pins (connected to transistor bases)
+pixels = neopixel.NeoPixel(board.NEOPIXEL,n = 10,brightness = 0.0 )
+
+# Motors
+# A1 for motor right motor, A2 for left motor 
 motor1 = pwmio.PWMOut(board.A1, frequency=1000)
 motor2 = pwmio.PWMOut(board.A2, frequency=1000)
 
-# Light sensor (built-in)
+# Light sensor
 light = analogio.AnalogIn(board.LIGHT)
 
-# Threshold (adjust as needed)
-THRESHOLD = 20000
+threshold = 20000
 
 def get_light_level():
-    return light.value  # ranges ~0 to 65535
+    return light.value
+
+#motor ranges from 
+
+# def move_foward():
+#     # motors need to stay on the same speed value
+#     
+# def turn_right():
+#     # have only the left motor move
+#     # sharp turn will be a high value 
+# 
+# 
+# def turn_left():
+#     # have only the right motor move
+
+
 
 while True:
+    
+    
     level = get_light_level()
+    
     print("Light level:", level)
 
-    if level > THRESHOLD:
-        # Turn motors ON (full speed)
-        motor1.duty_cycle = 65535
-        motor2.duty_cycle = 65535
-    else:
-        # Turn motors OFF
-        motor1.duty_cycle = 0
-        motor2.duty_cycle = 0
+#     if level > threshold:
+#         
+#         # Motors ON (full speed = 65535)
+#         
+#         # A phone flashlight full power, the light value is
+#             #- greater than 62,000 !!!!! NOT MOTOR SPEED
+#         
+#         
+#         motor1.duty_cycle = 
+#         motor2.duty_cycle = 
+#     else:
+#         # Motors OFF
+#         motor1.duty_cycle = 0
+#         motor2.duty_cycle = 0
+# 
+#     time.sleep(0.1)
 
-    time.sleep(0.1)
