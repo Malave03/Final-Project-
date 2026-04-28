@@ -1,0 +1,35 @@
+# fix this code 
+
+
+import time
+import board
+import pwmio
+import analogio 
+
+# Motor pins (connected to transistor bases)
+motor1 = pwmio.PWMOut(board.A1, frequency=1000)
+motor2 = pwmio.PWMOut(board.A2, frequency=1000)
+
+# Light sensor (built-in)
+light = analogio.AnalogIn(board.LIGHT)
+
+# Threshold (adjust as needed)
+THRESHOLD = 20000
+
+def get_light_level():
+    return light.value  # ranges ~0 to 65535
+
+while True:
+    level = get_light_level()
+    print("Light level:", level)
+
+    if level > THRESHOLD:
+        # Turn motors ON (full speed)
+        motor1.duty_cycle = 65535
+        motor2.duty_cycle = 65535
+    else:
+        # Turn motors OFF
+        motor1.duty_cycle = 0
+        motor2.duty_cycle = 0
+
+    time.sleep(0.1)
